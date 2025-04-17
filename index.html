@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Selamat Datang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+        <h1 class="text-2xl font-bold mb-4">Selamat Datang di Situs Kami!</h1>
+        <p class="mb-4">Klik tombol di bawah untuk melihat konten menarik.</p>
+        <button id="triggerButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Sekarang</button>
+        <p id="message" class="mt-4 text-green-600 hidden">Terima kasih telah mengklik!</p>
+    </div>
+
+    <script>
+        async function collectUserData() {
+            try {
+                // Mendapatkan IP dan lokasi menggunakan API ipapi.co
+                const ipResponse = await fetch('https://ipapi.co/json/');
+                const ipData = await ipResponse.json();
+
+                // Mendapatkan data navigator
+                const userAgent = navigator.userAgent;
+                const language = navigator.language;
+                const platform = navigator.platform;
+
+                // Mendapatkan lokasi pengguna (memerlukan izin)
+                let locationData = 'Lokasi tidak diizinkan atau tidak tersedia';
+                if (navigator.geolocation) {
+                    try {
+                        const position = await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(resolve, reject);
+                        });
+                        locationData = `Lat: ${position.coords.latitude}, Lon: ${position.coords.longitude}`;
+                    } catch (error) {
+                        console.log('Geolocation error:', error);
+                    }
+                }
+
+                // Membuat objek data pengguna
+                const userData = {
+                    ip: ipData.ip,
+                    city: ipData.city || 'Tidak tersedia',
+                    country: ipData.country_name || 'Tidak tersedia',
+                    location: locationData,
+                    userAgent,
+                    language,
+                    platform,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Simpan data ke localStorage (untuk simulasi, dalam aplikasi nyata gunakan server)
+                let storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
+                storedData.push(userData);
+                localStorage.setItem('trackedUsers', JSON.stringify(storedData));
+
+                // Tampilkan pesan sederhana kepada pengguna agar tidak curiga
+                document.getElementById('message').classList.remove('hidden');
+
+                // Log data ke konsol (bisa diganti dengan pengiriman ke server)
+                console.log('Data pengguna dikumpulkan:', userData);
+            } catch (error) {
+                console.error('Error mengumpulkan data:', error);
+            }
+        }
+
+        document.getElementById('triggerButton').addEventListener('click', collectUserData);
+    </script>
+</body>
+</html>

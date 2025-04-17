@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4">Admin Panel - Data Pengguna</h1>
+        <button id="clearData" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mb-4">Hapus Data</button>
+        <div id="userData" class="space-y-4"></div>
+    </div>
+
+    <script>
+        function displayUserData() {
+            const userDataDiv = document.getElementById('userData');
+            const storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
+
+            if (storedData.length === 0) {
+                userDataDiv.innerHTML = '<p class="text-gray-500">Belum ada data pengguna.</p>';
+                return;
+            }
+
+            userDataDiv.innerHTML = storedData.map((data, index) => `
+                <div class="border p-4 rounded">
+                    <p><strong>Pengguna #${index + 1}</strong></p>
+                    <p><strong>IP Address:</strong> ${data.ip}</p>
+                    <p><strong>Kota:</strong> ${data.city}</p>
+                    <p><strong>Negara:</strong> ${data.country}</p>
+                    <p><strong>Lokasi (GPS):</strong> ${data.location}</p>
+                    <p><strong>User Agent:</strong> ${data.userAgent}</p>
+                    <p><strong>Bahasa:</strong> ${data.language}</p>
+                    <p><strong>Platform:</strong> ${data.platform}</p>
+                    <p><strong>Waktu:</strong> ${data.timestamp}</p>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('clearData').addEventListener('click', () => {
+            localStorage.removeItem('trackedUsers');
+            displayUserData();
+        });
+
+        // Tampilkan data saat halaman dimuat
+        displayUserData();
+    </script>
+</body>
+</html>
