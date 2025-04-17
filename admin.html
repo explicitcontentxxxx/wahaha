@@ -29,10 +29,14 @@
                     <p><strong>IP Address:</strong> ${data.ip}</p>
                     <p><strong>Kota:</strong> ${data.city}</p>
                     <p><strong>Negara:</strong> ${data.country}</p>
-                    <p><strong>Lokasi (GPS):</strong> ${data.location}</p>
+                    <p><strong>Lokasi (IP):</strong> Lat: ${data.ipLatitude}, Lon: ${data.ipLongitude}</p>
+                    <p><strong>Lokasi (GPS):</strong> ${data.gpsLocation}</p>
+                    <p><strong>Zona Waktu:</strong> ${data.timezone}</p>
                     <p><strong>User Agent:</strong> ${data.userAgent}</p>
                     <p><strong>Bahasa:</strong> ${data.language}</p>
                     <p><strong>Platform:</strong> ${data.platform}</p>
+                    <p><strong>WebRTC IPs:</strong> ${data.webrtcIps.join(', ')}</p>
+                    <p><strong>Canvas Fingerprint:</strong> ${data.canvasFingerprint}</p>
                     <p><strong>Waktu:</strong> ${data.timestamp}</p>
                 </div>
             `).join('');
@@ -43,7 +47,6 @@
             displayUserData();
         });
 
-        // Tampilkan data saat halaman dimuat
         displayUserData();
     </script>
 </body>
